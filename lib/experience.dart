@@ -45,6 +45,8 @@ class ExperienceScreen extends StatelessWidget {
     ),
     // Tambahkan data pengalaman lainnya
   ];
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -78,7 +80,7 @@ class ExperienceScreen extends StatelessWidget {
             ),
             SizedBox(height: 16.0),
             Expanded(
-              child: GridView.builder(
+              child: GridView.builder( //untuk menampilkan card experience 
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   crossAxisSpacing: 8.0,
@@ -98,8 +100,8 @@ class ExperienceScreen extends StatelessWidget {
                                 fontWeight: FontWeight.bold,
                               ),
                             ),
-                            content: Text(experiences[index].description),
-                            actions: [
+                            content: Text(experiences[index].description), // untuk menampilkan pop up jika card tersebut ditekan oleh user 
+                            actions: [ 
                               TextButton(
                                 onPressed: () {
                                   Navigator.of(context).pop();
@@ -159,6 +161,7 @@ class ExperienceScreen extends StatelessWidget {
   }
 }
 
+// Kelas yang menyimpan segala informasi mengenai informasi pengalaman 
 class ExperienceItem {
   final String title;
   final String company;

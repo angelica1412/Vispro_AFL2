@@ -4,29 +4,37 @@ class MoreInfoPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'More Info',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        backgroundColor: Color.fromARGB(255, 238, 113, 136),
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
-        child: SingleChildScrollView(
-          scrollDirection: Axis.horizontal, // Mengatur scroll ke samping
+      body: NestedScrollView(
+        headerSliverBuilder: (BuildContext context, bool innerBoxIsScrolled) {
+          return [
+            SliverAppBar(
+              pinned: true,
+              expandedHeight:
+                  0.0, // Set ke 0.0 untuk menghilangkan background gambar
+              flexibleSpace: FlexibleSpaceBar(
+                title: Text(
+                  'More Info',
+                  style: TextStyle(fontWeight: FontWeight.bold),
+                ),
+                centerTitle: true, // Teks di tengah AppBar
+              ),
+              backgroundColor:
+                  Color.fromARGB(255, 238, 113, 136), // Warna AppBar
+            ),
+          ];
+        },
+        body: Padding(
+          padding: const EdgeInsets.all(16.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Tambahkan ikon dan teks "Education History"
               Row(
                 children: [
                   Icon(
                     Icons.school,
                     color: Color.fromARGB(255, 238, 113, 136),
-                  ), // Ubah warna ikon sesuai keinginan
-                  SizedBox(width: 8.0), // Jarak antara ikon dan teks
+                  ),
+                  SizedBox(width: 8.0),
                   Text(
                     'Education History',
                     style: TextStyle(
@@ -36,36 +44,78 @@ class MoreInfoPage extends StatelessWidget {
                   ),
                 ],
               ),
-              SizedBox(height: 8.0), // Jarak antara teks dan card
-
-              // Tambahkan row dengan card pendidikan
-              Row(
-                children: [
-                  EducationCard(
-                    degree: 'Informatics - Full Stack Development',
-                    school: 'STIE Ciputra Makassar',
-                    year: '2022 - Present',
-                    image: 'assets/uc.png', // Ganti dengan asset yang sesuai
-                  ),
-                  EducationCard(
-                    degree: 'High School - Science Major',
-                    school: 'SMA Rajawali Makassar',
-                    year: '2019 - 2022',
-                    image: 'assets/sma.png', // Ganti dengan asset yang sesuai
-                  ),
-                  EducationCard(
-                    degree: 'Junior School - General Major',
-                    school: 'SMP Rajawali Makassar',
-                    year: '2016 - 2019',
-                    image: 'assets/smp.jpg', // Ganti dengan asset yang sesuai
-                  ),
-                  EducationCard(
-                    degree: 'Elementary School - No Major',
-                    school: 'SD Nusantara Makassar',
-                    year: '2010 - 2016',
-                    image: 'assets/sd.jpg', // Ganti dengan asset yang sesuai
-                  ), // Tambahkan card pendidikan lainnya
-                ],
+              SizedBox(height: 8.0),
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    EducationCard(
+                      degree: 'Informatics - Full Stack Development',
+                      school: 'STIE Ciputra Makassar',
+                      year: '2022 - Present',
+                      image: 'assets/uc.png',
+                    ),
+                    EducationCard(
+                      degree: 'High School - Science Major',
+                      school: 'SMA Rajawali Makassar',
+                      year: '2019 - 2022',
+                      image: 'assets/sma.png',
+                    ),
+                    EducationCard(
+                      degree: 'Junior School - General Major',
+                      school: 'SMP Rajawali Makassar',
+                      year: '2016 - 2019',
+                      image: 'assets/smp.jpg',
+                    ),
+                    EducationCard(
+                      degree: 'Elementary School - No Major',
+                      school: 'SD Nusantara Makassar',
+                      year: '2010 - 2016',
+                      image: 'assets/sd.jpg',
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                  height:
+                      10.0), // Perkecil jarak antara Education History dan Achievement
+              Text(
+                'Achievements',
+                style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 18.0,
+                ),
+              ),
+              Expanded(
+                child: ListView(
+                  children: [
+                    AchievementCard(
+                      title: 'Lomba KTI AIoT',
+                      organization: 'Politeknik Semarang',
+                      year: '2023',
+                      role: 'Sebagai Peserta',
+                    ),
+                    AchievementCard(
+                      title: 'Lomba AIoT',
+                      organization: 'Universitas Udayana Bali',
+                      year: '2023',
+                      role: 'Sebagai Finalis',
+                    ),
+                    AchievementCard(
+                      title: 'Olimpiade Fisika',
+                      organization: 'Universitys ID',
+                      year: '2021, Masa SMA',
+                      role: 'Pemenang Silver Medal',
+                    ),
+                    AchievementCard(
+                      title: 'Ompliade Matematika ',
+                      organization: 'University ID',
+                      year: '2021, Masa SMA',
+                      role: 'Pemenang Silver Medal',
+                    ),
+                    // Tambahkan AchievementCard lainnya jika diperlukan
+                  ],
+                ),
               ),
             ],
           ),
@@ -140,6 +190,40 @@ class EducationCard extends StatelessWidget {
                 ),
               ),
             ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class AchievementCard extends StatelessWidget {
+  final String title;
+  final String organization;
+  final String year;
+  final String role;
+
+  AchievementCard({
+    required this.title,
+    required this.organization,
+    required this.year,
+    required this.role,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      child: ListTile(
+        title: Text(
+          title,
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        subtitle: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text('Organization: $organization'),
+            Text('Year: $year'),
+            Text('Role: $role'),
           ],
         ),
       ),
